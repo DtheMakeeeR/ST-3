@@ -69,7 +69,7 @@ TEST_F(TimedDoorTest, AdapterTimeoutNoThrowWhenClosed) {
     EXPECT_NO_THROW(adapter.Timeout());
 }
 
-TEST_F(TimedDoorTest, OpenDoorTimerThrows) {
+TEST_F(TimedDoorTest, OpenDoorTimerThrow) {
     door->unlock();
     Timer timer;
     DoorTimerAdapter adapter(*door);
