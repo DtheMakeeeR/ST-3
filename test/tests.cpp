@@ -22,7 +22,7 @@ class MockDoor : public Door {
 };
 
 class TimedDoorTest : public ::testing::Test {
- protected:  // 1 пробел перед protected:
+ protected:
     void SetUp() override {
         door = new TimedDoor(100);
     }
