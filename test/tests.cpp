@@ -1,10 +1,10 @@
-// Copyright 2021 GHA Test Team
-
-#include <gtest/gtest.h>
 #include <gmock/gmock.h>
-#include "../include/TimedDoor.h"
+#include <gtest/gtest.h>
+
 #include <stdexcept>
 #include <thread>
+
+#include "../include/TimedDoor.h"
 
 class MockTimerClient : public TimerClient {
 public:
@@ -145,7 +145,7 @@ TEST(TimerTest, TregisterWithZeroTimeout) {
 
 class MockDoorTimerAdapter : public TimerClient {
 public:
-    MockDoorTimerAdapter(MockDoor& d) : door(d) {}
+    explicit MockDoorTimerAdapter(MockDoor& d) : door(d) {}
     void Timeout() override {
         if (door.isDoorOpened()) {
             throw std::runtime_error("Timeout!");
@@ -174,4 +174,3 @@ TEST(MockDoorTest, AdapterDoesNotThrowWhenMockDoorClosed) {
 
     EXPECT_NO_THROW(adapter.Timeout());
 }
-
