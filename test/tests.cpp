@@ -5,23 +5,24 @@
 
 #include <stdexcept>
 #include <thread>
+#include <chrono>
 
 #include "../include/TimedDoor.h"
 
 class MockTimerClient : public TimerClient {
-public:
+ public:  // 1 пробел перед public:
     MOCK_METHOD(void, Timeout, (), (override));
 };
 
 class MockDoor : public Door {
-public:
+ public:  // 1 пробел перед public:
     MOCK_METHOD(void, lock, (), (override));
     MOCK_METHOD(void, unlock, (), (override));
     MOCK_METHOD(bool, isDoorOpened, (), (override));
 };
 
 class TimedDoorTest : public ::testing::Test {
-protected:
+ protected:  // 1 пробел перед protected:
     void SetUp() override {
         door = new TimedDoor(100);
     }
@@ -34,7 +35,7 @@ protected:
 };
 
 class TimerTest : public ::testing::Test {
-protected:
+protected:  // 1 пробел перед protected:
     void SetUp() override {
         mockClient = new MockTimerClient();
         timer = new Timer();
@@ -146,14 +147,16 @@ TEST(TimerTest, TregisterWithZeroTimeout) {
 }
 
 class MockDoorTimerAdapter : public TimerClient {
-public:
+ public:  // 1 пробел перед public:
     explicit MockDoorTimerAdapter(MockDoor& d) : door(d) {}
+
     void Timeout() override {
         if (door.isDoorOpened()) {
             throw std::runtime_error("Timeout!");
         }
     }
-private:
+
+ private:  // 1 пробел перед private:
     MockDoor& door;
 };
 
@@ -176,3 +179,4 @@ TEST(MockDoorTest, AdapterDoesNotThrowWhenMockDoorClosed) {
 
     EXPECT_NO_THROW(adapter.Timeout());
 }
+
