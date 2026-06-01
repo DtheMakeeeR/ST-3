@@ -97,9 +97,8 @@ TEST_F(TimerTest, TimerCallsTimeoutAfterDelay) {
     std::this_thread::sleep_for(std::chrono::milliseconds(20));
 }
 
-TEST(TimerNullTest, TimerDoesNotCrashWithNullClient) {
-    Timer timer;
-    EXPECT_NO_THROW(timer.tregister(10, nullptr));
+TEST_F(TimerTest, TimerDoesNotCrashWithNullClient) {  
+    EXPECT_NO_THROW(timer->tregister(10, nullptr));
 }
 
 TEST(IntegrationTest, FullCycleWithTimeoutThrows) {
@@ -138,12 +137,10 @@ TEST(DoorTimerAdapterTest, AdapterStoresReferenceToDoor) {
     EXPECT_THROW(adapter.Timeout(), std::runtime_error);
 }
 
-TEST(TimerTest, TregisterWithZeroTimeout) {
+TEST_F(TimerTest, TregisterWithZeroTimeout) {  
     MockTimerClient client;
-    Timer timer;
-
     EXPECT_CALL(client, Timeout()).Times(1);
-    timer.tregister(0, &client);
+    timer->tregister(0, &client);
 }
 
 class MockDoorTimerAdapter : public TimerClient {
