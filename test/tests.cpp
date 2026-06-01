@@ -10,12 +10,12 @@
 #include "../include/TimedDoor.h"
 
 class MockTimerClient : public TimerClient {
- public:  // 1 пробел перед public:
+ public:
     MOCK_METHOD(void, Timeout, (), (override));
 };
 
 class MockDoor : public Door {
- public:  // 1 пробел перед public:
+ public:
     MOCK_METHOD(void, lock, (), (override));
     MOCK_METHOD(void, unlock, (), (override));
     MOCK_METHOD(bool, isDoorOpened, (), (override));
@@ -35,7 +35,7 @@ class TimedDoorTest : public ::testing::Test {
 };
 
 class TimerTest : public ::testing::Test {
-protected:  // 1 пробел перед protected:
+ protected:
     void SetUp() override {
         mockClient = new MockTimerClient();
         timer = new Timer();
@@ -97,7 +97,7 @@ TEST_F(TimerTest, TimerCallsTimeoutAfterDelay) {
     std::this_thread::sleep_for(std::chrono::milliseconds(20));
 }
 
-TEST_F(TimerTest, TimerDoesNotCrashWithNullClient) {  
+TEST_F(TimerTest, TimerDoesNotCrashWithNullClient) {
     EXPECT_NO_THROW(timer->tregister(10, nullptr));
 }
 
@@ -137,14 +137,14 @@ TEST(DoorTimerAdapterTest, AdapterStoresReferenceToDoor) {
     EXPECT_THROW(adapter.Timeout(), std::runtime_error);
 }
 
-TEST_F(TimerTest, TregisterWithZeroTimeout) {  
+TEST_F(TimerTest, TregisterWithZeroTimeout) {
     MockTimerClient client;
     EXPECT_CALL(client, Timeout()).Times(1);
     timer->tregister(0, &client);
 }
 
 class MockDoorTimerAdapter : public TimerClient {
- public:  // 1 пробел перед public:
+ public:
     explicit MockDoorTimerAdapter(MockDoor& d) : door(d) {}
 
     void Timeout() override {
@@ -153,7 +153,7 @@ class MockDoorTimerAdapter : public TimerClient {
         }
     }
 
- private:  // 1 пробел перед private:
+ private:
     MockDoor& door;
 };
 
