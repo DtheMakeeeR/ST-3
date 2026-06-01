@@ -43,7 +43,9 @@ void Timer::sleep(int t) {
 }
 
 void Timer::tregister(int timeout, TimerClient* client) {
-    this->client = client;
+    if (client == nullptr) {
+        return;
+    }
     sleep(timeout);
     client->Timeout();
 }
