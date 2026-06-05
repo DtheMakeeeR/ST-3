@@ -7,16 +7,19 @@
 #include <condition_variable>
 #include <mutex>
 
+// DoorTimerAdapter implementation
 DoorTimerAdapter::DoorTimerAdapter(TimedDoor& door) : door(door) {}
 
 void DoorTimerAdapter::Timeout() {
     door.throwState();
 }
 
+// TimedDoor implementation
 TimedDoor::TimedDoor(int timeout)
     : iTimeout(timeout), isOpened(false), adapter(nullptr) {
     adapter = new DoorTimerAdapter(*this);
 }
+
 
 bool TimedDoor::isDoorOpened() {
     return isOpened;
@@ -28,6 +31,10 @@ void TimedDoor::unlock() {
 
 void TimedDoor::lock() {
     isOpened = false;
+}
+
+int TimedDoor::getTimeOut() {
+    return iTimeout;
 }
 
 void TimedDoor::throwState() {
